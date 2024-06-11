@@ -5,6 +5,7 @@ MESSAGE_COLOR = '\033[92m'
 RESET_ALL = "\x1b[0m"
 
 # Install pipenv for Linux
+os.system("pip install --upgrade pip")
 os.system("pip install pipenv")
 
 # Install virtual environment and synchronize packages
