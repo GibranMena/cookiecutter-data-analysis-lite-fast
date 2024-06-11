@@ -11,8 +11,7 @@ os.system("pipx install poetry")
 print(f"{MESSAGE_COLOR}Creating virtual environment...{RESET_ALL}")
 
 os.system("poetry env use python3.8")
-# os.system("poetry env list")
-# os.system("poetry show --tree")
+os.system("poetry env list")
 
 # Initialize git
 print(f"{MESSAGE_COLOR}Initializing a git repository...{RESET_ALL}")
