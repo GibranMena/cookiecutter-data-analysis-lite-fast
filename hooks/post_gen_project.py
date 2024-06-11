@@ -10,6 +10,7 @@ os.system("pipx install poetry")
 # Install virtual environment and synchronize packages
 print(f"{MESSAGE_COLOR}Creating virtual environment...{RESET_ALL}")
 os.system("poetry env use python3.8")
+os.system("poetry install")
 
 # Initialize git
 print(f"{MESSAGE_COLOR}Initializing a git repository...{RESET_ALL}")
