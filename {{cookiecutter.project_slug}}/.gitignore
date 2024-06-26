@@ -129,8 +129,5 @@ cython_debug/
 # VS Code
 .vs*
 
-# Directories
-data/
-
 # Secret files
 config.ini
