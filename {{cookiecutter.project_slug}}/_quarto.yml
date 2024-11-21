@@ -14,14 +14,15 @@ format:
 website:
   navbar:
     search: true
-    title: "{{cookiecutter.project_name}}""
+    title: >
+      {{cookiecutter.project_name}}
     background: "primary"
   page-footer: 
     border: false
     background: dark
     foreground: "#ffffff"
     left: >
-      Created by "{{cookiecutter.project_author}}"
+      Created by {{cookiecutter.project_author}}
     center:
       - icon: github
         href: https://github.com/fer-aguirre
