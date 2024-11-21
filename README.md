@@ -18,7 +18,14 @@ A starter [cookiecutter](https://github.com/cookiecutter/cookiecutter) template 
 |  ├─ processed                # Cleaned data
 |  └─ raw                      # Original data
 |
-├─ notebooks                   # Jupyter notebooks
+├─ docs                        # Quarto's rendered docs
+|   └─ .nojekyll               # Prevent Jekyll processing
+|
+├─ _quarto.yml                 # Quarto's config file
+├─ custom.scss                 # Quarto's Sass stylesheet
+├─ index.qmd                   # Quarto's home page
+|
+├─ _notebooks                  # Jupyter notebooks
 |  ├─ 0.0-collect-data.ipynb   # Gathering data
 |  ├─ 1.0-process-data.ipynb   # Data processing (fixing column types, data cleansing, etc.)
 |  ├─ 2.0-analyze-data.ipynb   # Exploratory data analysis
