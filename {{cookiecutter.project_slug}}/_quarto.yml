@@ -24,9 +24,9 @@ website:
       Created by "{{cookiecutter.project_author}}"
     center:
       - icon: github
-        href: https://github.com/{{project_author_github_username}}
+        href: https://github.com/fer-aguirre
       - icon: envelope
-        href: mailto:"{{project_author_email}}"
+        href: mailto:feraguirre@riseup.net
     right: >
         [Powered by Quarto](https://quarto.org/)
 
