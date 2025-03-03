@@ -9,7 +9,7 @@ os.system("pipx install poetry")
 
 # Install virtual environment and synchronize packages
 print(f"{MESSAGE_COLOR}Creating virtual environment...{RESET_ALL}")
-os.system("poetry env use python3.8")
+os.system(f"poetry env use python{{cookiecutter.python_version}}")
 os.system("poetry install")
 
 # Initialize git
