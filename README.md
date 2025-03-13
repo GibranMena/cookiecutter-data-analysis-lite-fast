@@ -35,6 +35,7 @@ A starter [cookiecutter](https://github.com/cookiecutter/cookiecutter) template 
 |  ├─ figures                  # Generated graphics, maps, etc. to be used in reporting
 |  └─ tables                   # Generated pivot tables to analyze data
 |
+├─ setup.py                    # Import project as a python module
 ┴
 
 ```
