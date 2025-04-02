@@ -1,33 +1,79 @@
-""" Script that runs after the project generation"""
+"""
+Post-generation script for Cookiecutter project.
+Sets up the project with selected package manager and initializes Git repository.
+"""
 import os
+import subprocess
+import sys
+from typing import List, Optional
 
-MESSAGE_COLOR = '\033[92m'
-RESET_ALL = "\x1b[0m"
+# Console colors for better readability
+class Colors:
+    SUCCESS = '\033[92m'
+    INFO = '\033[94m'
+    WARNING = '\033[93m'
+    ERROR = '\033[91m'
+    RESET = "\x1b[0m"
 
-# Get the selected package manager from cookiecutter
-package_manager = "{{cookiecutter.package_manager}}"
-project_name = "{{cookiecutter.project_name}}"
+# Project configuration from cookiecutter
+PACKAGE_MANAGER = "{{cookiecutter.package_manager}}"
+PROJECT_NAME = "{{cookiecutter.project_name}}"
+PROJECT_SLUG = "{{cookiecutter.project_slug}}"
+PROJECT_DESCRIPTION = "{{cookiecutter.project_description}}"
+PROJECT_AUTHOR = "{{cookiecutter.project_author}}"
+PYTHON_VERSION = "{{cookiecutter.python_version}}"
 
-print(f"{MESSAGE_COLOR}Setting up project with {package_manager}...{RESET_ALL}")
+# Common dependencies for both package managers
+COMMON_DEPENDENCIES = [
+    "ipykernel",
+    "nbformat",
+    "pandas",
+    "numpy",
+    "requests",
+    "plotly",
+    "openpyxl"
+]
 
-if package_manager == "poetry":
-    # Install poetry
-    print(f"{MESSAGE_COLOR}Installing Poetry...{RESET_ALL}")
-    os.system("pipx install poetry")
+def print_status(message: str, color: str = Colors.INFO) -> None:
+    """Print a formatted status message."""
+    print(f"{color}{message}{Colors.RESET}")
 
-    # Create pyproject.toml
-    print(f"{MESSAGE_COLOR}Creating pyproject.toml file...{RESET_ALL}")
+def run_command(command: List[str], error_message: str = "Command failed") -> bool:
+    """
+    Run a shell command safely.
+    
+    Args:
+        command: List of command parts to execute
+        error_message: Message to display if command fails
+    
+    Returns:
+        bool: True if command succeeded, False otherwise
+    """
+    try:
+        subprocess.run(command, check=True)
+        return True
+    except subprocess.CalledProcessError:
+        print_status(f"Error: {error_message}", Colors.ERROR)
+        return False
+    
+def setup_poetry() -> bool:
+    """Set up the project using Poetry."""
+    print_status("Installing Poetry...", Colors.INFO)
+    if not run_command(["pipx", "install", "poetry"], "Failed to install Poetry"):
+        return False
+    
+    print_status("Creating pyproject.toml file...", Colors.INFO)
     with open("pyproject.toml", "w") as f:
-        f.write("""[tool.poetry]
-name = "{{cookiecutter.project_slug}}"
+        f.write(f"""[tool.poetry]
+name = "{PROJECT_SLUG}"
 version = "0.1.0"
-description = "{{cookiecutter.project_description}}"
-authors = ["{{cookiecutter.project_author}}"]
+description = "{PROJECT_DESCRIPTION}"
+authors = ["{PROJECT_AUTHOR}"]
 readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^{{cookiecutter.python_version}}"
+python = "^{PYTHON_VERSION}"
 ipykernel = "*"
 nbformat = "*"
 pandas = "*"
@@ -41,24 +87,76 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 """)
     
-    # Install virtual environment and synchronize packages
-    print(f"{MESSAGE_COLOR}Creating virtual environment with Poetry...{RESET_ALL}")
-    os.system(f"poetry env use python{{cookiecutter.python_version}}")
-    os.system("poetry install")
+    print_status("Creating virtual environment with Poetry...", Colors.INFO)
+    if not run_command(["poetry", "env", "use", f"python{PYTHON_VERSION}"], 
+                     "Failed to set Python version"):
+        return False
     
-elif package_manager == "uv":
-    # Install uv
-    print(f"{MESSAGE_COLOR}Installing uv...{RESET_ALL}")
-    os.system("pipx install uv")
+    if not run_command(["poetry", "install"], "Failed to install dependencies"):
+        return False
     
-    # Set up virtual environment with uv
-    print(f"{MESSAGE_COLOR}Creating virtual environment with uv...{RESET_ALL}")
-    os.system(f"uv venv --python={{cookiecutter.python_version}}")
-    os.system("uv pip install -r requirements.txt")
+    return True
 
-# Initialize git (common for both package managers)
-print(f"{MESSAGE_COLOR}Initializing a git repository...{RESET_ALL}")
-os.system("git init && git add . && git commit -m 'Initial commit' && git branch -M main")
+def setup_uv() -> bool:
+    """Set up the project using uv."""
+    print_status("Installing uv...", Colors.INFO)
+    if not run_command(["pipx", "install", "uv"], "Failed to install uv"):
+        return False
+    
+    print_status("Creating requirements.txt file...", Colors.INFO)
+    with open("requirements.txt", "w") as f:
+        f.write("\n".join(COMMON_DEPENDENCIES))
+    
+    print_status("Creating virtual environment with uv...", Colors.INFO)
+    if not run_command(["uv", "venv", "--python", f"{PYTHON_VERSION}"], 
+                     "Failed to create virtual environment"):
+        return False
+    
+    if not run_command(["uv", "pip", "install", "-r", "requirements.txt"], 
+                     "Failed to install dependencies"):
+        return False
+    
+    return True
 
-# Final message
-print(f"{MESSAGE_COLOR}Your template for {{cookiecutter.project_name}} is ready!{RESET_ALL}")
+def setup_git() -> bool:
+    """Initialize git repository with initial commit."""
+    print_status("Initializing git repository...", Colors.INFO)
+    commands = [
+        ["git", "init"],
+        ["git", "add", "."],
+        ["git", "commit", "-m", "Initial commit"],
+        ["git", "branch", "-M", "main"]
+    ]
+    
+    for cmd in commands:
+        if not run_command(cmd, f"Failed to run {' '.join(cmd)}"):
+            return False
+    
+    return True
+
+def main() -> int:
+    """Main function that orchestrates the post-generation setup."""
+    print_status(f"Setting up project {PROJECT_NAME} with {PACKAGE_MANAGER}...", Colors.SUCCESS)
+    
+    success = False
+    if PACKAGE_MANAGER == "poetry":
+        success = setup_poetry()
+    elif PACKAGE_MANAGER == "uv":
+        success = setup_uv()
+    else:
+        print_status(f"Unsupported package manager: {PACKAGE_MANAGER}", Colors.ERROR)
+        return 1
+    
+    if not success:
+        print_status("Failed to set up package manager", Colors.ERROR)
+        return 1
+    
+    if not setup_git():
+        print_status("Failed to initialize git repository", Colors.ERROR)
+        return 1
+    
+    print_status(f"Your template for {PROJECT_NAME} is ready!", Colors.SUCCESS)
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

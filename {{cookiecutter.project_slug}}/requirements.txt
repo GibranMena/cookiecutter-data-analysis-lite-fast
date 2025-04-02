@@ -1,7 +1,0 @@
-ipykernel
-nbformat
-pandas
-numpy
-requests
-plotly
-openpyxl
