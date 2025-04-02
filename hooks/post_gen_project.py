@@ -15,7 +15,7 @@ if package_manager == "poetry":
     print(f"{MESSAGE_COLOR}Installing Poetry...{RESET_ALL}")
     os.system("pipx install poetry")
 
-    # Create pyproject.toml - Note the removal of indentation
+    # Create pyproject.toml
     print(f"{MESSAGE_COLOR}Creating pyproject.toml file...{RESET_ALL}")
     with open("pyproject.toml", "w") as f:
         f.write("""[tool.poetry]
@@ -27,14 +27,14 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.8"
-ipykernel = "^6.0.3"
-nbformat = "^5.1.3"
-pandas = "^1.3.0"
-numpy = "^1.21.0"
-requests = "^2.26.0"
-plotly = "^5.3.1"
-openpyxl = "^3.0.9"
+python = "{{cookiecutter.python_version}}"
+ipykernel = "*"
+nbformat = "*"
+pandas = "*"
+numpy = "*"
+requests = "*"
+plotly = "*"
+openpyxl = "*"
 
 [build-system]
 requires = ["poetry-core"]
