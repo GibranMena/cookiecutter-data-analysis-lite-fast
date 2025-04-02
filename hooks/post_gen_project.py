@@ -4,15 +4,32 @@ import os
 MESSAGE_COLOR = '\033[92m'
 RESET_ALL = "\x1b[0m"
 
-# Install poetry
-os.system("pipx install poetry")
+# Get the selected package manager from cookiecutter
+package_manager = "{{cookiecutter.package_manager}}"
 
-# Install virtual environment and synchronize packages
-print(f"{MESSAGE_COLOR}Creating virtual environment...{RESET_ALL}")
-os.system(f"poetry env use python{{cookiecutter.python_version}}")
-os.system("poetry install")
+print(f"{MESSAGE_COLOR}Setting up project with {package_manager}...{RESET_ALL}")
 
-# Initialize git
+if package_manager == "poetry":
+    # Install poetry
+    print(f"{MESSAGE_COLOR}Installing Poetry...{RESET_ALL}")
+    os.system("pipx install poetry")
+    
+    # Install virtual environment and synchronize packages
+    print(f"{MESSAGE_COLOR}Creating virtual environment with Poetry...{RESET_ALL}")
+    os.system(f"poetry env use python{{cookiecutter.python_version}}")
+    os.system("poetry add $(cat requirements.txt)")
+    
+elif package_manager == "uv":
+    # Install uv
+    print(f"{MESSAGE_COLOR}Installing uv...{RESET_ALL}")
+    os.system("pipx install uv")
+    
+    # Set up virtual environment with uv
+    print(f"{MESSAGE_COLOR}Creating virtual environment with uv...{RESET_ALL}")
+    os.system(f"uv venv --python={{cookiecutter.python_version}}")
+    os.system("uv pip install -r requirements.txt")
+
+# Initialize git (common for both package managers)
 print(f"{MESSAGE_COLOR}Initializing a git repository...{RESET_ALL}")
 os.system("git init && git add . && git commit -m 'Initial commit' && git branch -M main")
 
