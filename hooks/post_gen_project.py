@@ -14,6 +14,10 @@ if package_manager == "poetry":
     print(f"{MESSAGE_COLOR}Installing Poetry...{RESET_ALL}")
     os.system("pipx install poetry")
     
+    # Initialize Poetry project with basic configuration
+    print(f"{MESSAGE_COLOR}Initializing Poetry project...{RESET_ALL}")
+    os.system("poetry init --no-interaction --name=\"{PROJECT_NAME.lower().replace(' ', '-')}\" --version=\"0.1.0\"")
+    
     # Install virtual environment and synchronize packages
     print(f"{MESSAGE_COLOR}Creating virtual environment with Poetry...{RESET_ALL}")
     os.system(f"poetry env use python{{cookiecutter.python_version}}")
