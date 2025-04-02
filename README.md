@@ -2,6 +2,55 @@
 
 A starter [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data analysis projects that offers a simplified and beginner-friendly structure.
 
+Created by: Fernanda Aguirre Ruíz
+
+---
+
+## Why Use This Template?
+
+- **Consistency:** Maintains a standardized structure across all your data analysis projects
+- **Efficiency:** Eliminates the repetitive setup process for new projects
+- **Best Practices:** Follows established data science project organization principles
+- **Flexibility:** Customizable to your specific needs while maintaining structure
+
+---
+
+## Requirements
+
+- Python 3.8 or higher
+- Cookiecutter 1.7.0 or higher
+
+---
+
+## Installation
+
+First, make sure you have cookiecutter installed:
+
+```
+pip install cookiecutter
+```
+Then generate a new data project:
+
+```
+cookiecutter https://github.com/fer-aguirre/cookiecutter-data-analysis-lite
+```
+
+---
+
+## Template parameters
+
+During the project creation process, you will be prompted to enter values for the following parameters:
+
+| Parameter          | Description                                                   |
+|--------------------|---------------------------------------------------------------|
+| `project_name`     | Name of your data analysis project                            |
+| `project_slug`     | URL-friendly name of the project (automatically generated)    |
+| `project_description` | A brief description of the project                         |
+| `project_author`   | Your name or organization name                                |
+| `project_license`  | Choose between MIT License or GNU General Public License v3   |
+| `python_version`   | Choose between Python 3.8 or 3.11                             |
+| `package_manager`  | Choose between uv or poetry for dependency management         |
+
 ---
 
 ## Directory Structure
