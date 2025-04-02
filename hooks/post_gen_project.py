@@ -27,7 +27,7 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "{{cookiecutter.python_version}}"
+python = "^{{cookiecutter.python_version}}"
 ipykernel = "*"
 nbformat = "*"
 pandas = "*"
