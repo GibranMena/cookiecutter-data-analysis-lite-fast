@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Script that runs before the project generation to validate inputs."""
 import os
 import re
