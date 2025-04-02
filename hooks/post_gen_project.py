@@ -83,7 +83,7 @@ def setup_uv():
                       "Failed to create uv virtual environment"):
         return False
     
-    if not run_command("uv pip install -r requirements.txt", 
+    if not run_command("uv install -r requirements.txt", 
                       "Failed to install dependencies with uv"):
         return False
     
