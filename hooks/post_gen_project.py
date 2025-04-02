@@ -54,14 +54,38 @@ def setup_poetry():
     if not run_command("pipx install poetry", "Failed to install Poetry"):
         return False
     
-    print_colored("Creating virtual environment with Poetry...")
-    if not run_command(f"poetry env use python{PYTHON_VERSION}", 
-                       "Failed to create Poetry virtual environment"):
+    print_colored("Initializing Poetry project...")
+    if not run_command(f"poetry init --no-interaction --name=\"{PROJECT_NAME.lower().replace(' ', '-')}\" --version=\"0.1.0\"", 
+                      "Failed to initialize Poetry project"):
         return False
     
-    if not run_command("poetry add $(cat requirements.txt)", 
+    print_colored("Creating virtual environment with Poetry...")
+    if not run_command(f"poetry env use python{PYTHON_VERSION}", 
+                      "Failed to create Poetry virtual environment"):
+        return False
+    
+    # Create temporary script to process requirements.txt
+    with open("process_requirements.py", "w") as f:
+        f.write('''
+import subprocess
+import sys
+
+with open("requirements.txt", "r") as req_file:
+    for line in req_file:
+        req = line.strip()
+        if req and not req.startswith("#"):
+            print(f"Installing {req}...")
+            subprocess.run(["poetry", "add", req], check=False)
+''')
+    
+    print_colored("Installing dependencies from requirements.txt...")
+    if not run_command("python process_requirements.py", 
                       "Failed to install dependencies with Poetry"):
         return False
+    
+    # Clean up temporary script
+    if not run_command("rm process_requirements.py", "Failed to clean up temporary file"):
+        print_colored("Warning: Could not remove temporary script", "\x1b[33m")
     
     return True
 
@@ -105,7 +129,8 @@ def main():
     """Main function to orchestrate the post-generation setup."""
     print_colored(f"Setting up project with {PACKAGE_MANAGER}...")
     
-    success = False
+    success = FalsePoetry could not find a pyproject.toml file in /home/fxr/Documents/personal/data_analysis or its parents
+
     if PACKAGE_MANAGER == "poetry":
         success = setup_poetry()
     elif PACKAGE_MANAGER == "uv":
