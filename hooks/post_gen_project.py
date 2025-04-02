@@ -43,7 +43,7 @@ build-backend = "poetry.core.masonry.api"
     
     # Install virtual environment and synchronize packages
     print(f"{MESSAGE_COLOR}Creating virtual environment with Poetry...{RESET_ALL}")
-    os.system(f"poetry env use python{{{cookiecutter.python_version}}}")
+    os.system(f"poetry env use python{{cookiecutter.python_version}}")
     os.system("poetry install")
     
 elif package_manager == "uv":
@@ -53,7 +53,7 @@ elif package_manager == "uv":
     
     # Set up virtual environment with uv
     print(f"{MESSAGE_COLOR}Creating virtual environment with uv...{RESET_ALL}")
-    os.system(f"uv venv --python={{{cookiecutter.python_version}}}")
+    os.system(f"uv venv --python={{cookiecutter.python_version}}")
     os.system("uv pip install -r requirements.txt")
 
 # Initialize git (common for both package managers)
