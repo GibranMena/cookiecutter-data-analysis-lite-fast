@@ -6,6 +6,7 @@ RESET_ALL = "\x1b[0m"
 
 # Get the selected package manager from cookiecutter
 package_manager = "{{cookiecutter.package_manager}}"
+project_name = "{{cookiecutter.project_name}}"
 
 print(f"{MESSAGE_COLOR}Setting up project with {package_manager}...{RESET_ALL}")
 
@@ -13,15 +14,37 @@ if package_manager == "poetry":
     # Install poetry
     print(f"{MESSAGE_COLOR}Installing Poetry...{RESET_ALL}")
     os.system("pipx install poetry")
+
+    # Create pyproject.toml
+    print(f"{MESSAGE_COLOR}Creating pyproject.toml file...{RESET_ALL}")
+    with open("pyproject.toml", "w") as f:
+        f.write("""[tool.poetry]
+                    name = "{{cookiecutter.project_slug}}"
+                    version = "0.1.0"
+                    description = "{{cookiecutter.project_description}}"
+                    authors = ["{{cookiecutter.project_author}}"]
+                    readme = "README.md"
+
+                    [tool.poetry.dependencies]
+                    python = "^3.8"
+                    ipykernel = "^6.0.3"
+                    nbformat = "^5.1.3"
+                    pandas = "^1.3.0"
+                    numpy = "^1.21.0"
+                    requests = "^2.26.0"
+                    plotly = "^5.3.1"
+                    openpyxl = "^3.0.9"
+
+                    [build-system]
+                    requires = ["poetry-core"]
+                    build-backend = "poetry.core.masonry.api"
+                    """)
     
-    # Initialize Poetry project with basic configuration
-    print(f"{MESSAGE_COLOR}Initializing Poetry project...{RESET_ALL}")
-    os.system("poetry init --no-interaction --name=\"{PROJECT_NAME.lower().replace(' ', '-')}\" --version=\"0.1.0\"")
     
     # Install virtual environment and synchronize packages
     print(f"{MESSAGE_COLOR}Creating virtual environment with Poetry...{RESET_ALL}")
     os.system(f"poetry env use python{{cookiecutter.python_version}}")
-    os.system("cat requirements.txt | xargs -a - poetry add")
+    os.system("poetry install")
     
 elif package_manager == "uv":
     # Install uv
