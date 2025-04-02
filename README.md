@@ -9,7 +9,8 @@ A starter [cookiecutter](https://github.com/cookiecutter/cookiecutter) template 
 ┬
 ├─ .gitignore                  # Customized .gitignore for python projects
 ├─ LICENSE                     # Project's license
-├─ pyproject.toml              # Project dependencies
+├─ pyproject.toml              # Project dependencies with poetry
+├─ requirements.txt            # Project dependencies with uv
 ├─ README.md                   # Top-level README for this project
 |
 ├─ assets                      # Resources for the project
