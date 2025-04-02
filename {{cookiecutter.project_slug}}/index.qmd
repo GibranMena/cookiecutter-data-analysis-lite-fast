@@ -15,7 +15,6 @@ format:
 ---
 
 ::: {.panel-tabset .nav-pills}
-
 ## Tab 1
 
 Content Tab 1
@@ -24,9 +23,7 @@ Content Tab 1
 
 Content Tab 2
 
-
 ## Tab 3
 
 Content Tab 3
-
 :::
