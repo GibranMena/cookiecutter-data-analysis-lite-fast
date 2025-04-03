@@ -1,6 +1,6 @@
 # Cookiecutter Data Analysis Lite 🐝
 
-A starter [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data analysis projects that offers a simplified and beginner-friendly structure.
+A [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data journalism projects that offers a simplified and beginner-friendly structure.
 
 Created by: Fernanda Aguirre Ruíz
 
