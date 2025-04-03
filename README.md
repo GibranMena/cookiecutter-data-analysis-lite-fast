@@ -58,8 +58,7 @@ During the project creation process, you will be prompted to enter values for th
 ┬
 ├─ .gitignore                  # Customized .gitignore for python projects
 ├─ LICENSE                     # Project's license
-├─ pyproject.toml              # Project dependencies with poetry
-├─ requirements.txt            # Project dependencies with uv
+├─ pyproject.toml              # Project dependencies
 ├─ README.md                   # Top-level README for this project
 |
 ├─ assets                      # Resources for the project
