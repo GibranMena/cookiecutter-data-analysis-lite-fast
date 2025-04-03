@@ -69,7 +69,7 @@ def setup_uv() -> bool:
                      "Failed to create virtual environment"):
         return False
     
-    if not run_command(["uv", "pip", "install", "-r", "requirements.txt"], 
+    if not run_command(["uv", "pip", "sync", "pyproject.toml"], 
                      "Failed to install dependencies"):
         return False
     
