@@ -103,7 +103,7 @@ description = "{PROJECT_DESCRIPTION}"
 readme = "README.md"
 requires-python = ">={PYTHON_VERSION}"
 authors = [
-    {{name = "{PROJECT_AUTHOR}"}}
+    {{{{name = "{PROJECT_AUTHOR}"}}}}
 ]
 
 dependencies = [
