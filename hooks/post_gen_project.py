@@ -18,6 +18,9 @@ class Colors:
 # Project configuration from cookiecutter
 PACKAGE_MANAGER = "{{cookiecutter.package_manager}}"
 PROJECT_NAME = "{{cookiecutter.project_name}}"
+PROJECT_SLUG = "{{cookiecutter.project_slug}}"
+PROJECT_DESCRIPTION = "{{cookiecutter.project_description}}"
+PROJECT_AUTHOR = "{{cookiecutter.project_author}}"
 PYTHON_VERSION = "{{cookiecutter.python_version}}"
 
 def print_status(message: str, color: str = Colors.INFO) -> None:
@@ -47,6 +50,31 @@ def setup_poetry() -> bool:
     print_status("Installing Poetry...", Colors.INFO)
     if not run_command(["pipx", "install", "poetry"], "Failed to install Poetry"):
         return False
+
+    print_status("Creating pyproject.toml file...", Colors.INFO)
+    with open("pyproject.toml", "w") as f:
+        f.write(f"""[tool.poetry]
+name = "{PROJECT_SLUG}"
+version = "0.1.0"
+description = "{PROJECT_DESCRIPTION}"
+authors = ["{PROJECT_AUTHOR}"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^{PYTHON_VERSION}"
+ipykernel = "*"
+nbformat = "*"
+pandas = "*"
+numpy = "*"
+requests = "*"
+plotly = "*"
+openpyxl = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+""")
     
     print_status("Creating virtual environment with Poetry...", Colors.INFO)
     if not run_command(["poetry", "env", "use", f"python{PYTHON_VERSION}"], 
@@ -63,6 +91,37 @@ def setup_uv() -> bool:
     print_status("Installing uv...", Colors.INFO)
     if not run_command(["pipx", "install", "uv"], "Failed to install uv"):
         return False
+
+    print_status("Creating pyproject.toml file...", Colors.INFO)
+    with open("pyproject.toml", "w") as f:
+        f.write(f"""[tool.poetry]
+[project]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_description}}"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [
+    {name = "{{cookiecutter.project_author}}"}
+]
+
+dependencies = [
+    "ipykernel",
+    "nbformat",
+    "pandas",
+    "numpy",
+    "requests",
+    "plotly",
+    "openpyxl",
+]
+
+[build-system]
+requires = ["hatchling>=1.0.0"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package-mode = false
+""")
     
     print_status("Creating virtual environment with uv...", Colors.INFO)
     if not run_command(["uv", "venv", "--python", f"{PYTHON_VERSION}"], 
