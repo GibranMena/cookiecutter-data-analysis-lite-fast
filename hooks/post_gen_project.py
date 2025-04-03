@@ -53,7 +53,8 @@ def setup_poetry() -> bool:
 
     print_status("Creating pyproject.toml file...", Colors.INFO)
     with open("pyproject.toml", "w") as f:
-        f.write(f"""[tool.poetry]
+        f.write(f"""
+[tool.poetry]
 name = "{PROJECT_SLUG}"
 version = "0.1.0"
 description = "{PROJECT_DESCRIPTION}"
@@ -94,15 +95,15 @@ def setup_uv() -> bool:
 
     print_status("Creating pyproject.toml file...", Colors.INFO)
     with open("pyproject.toml", "w") as f:
-        f.write(f"""[tool.poetry]
+        f.write(f"""
 [project]
-name = "{{cookiecutter.project_slug}}"
+name = "{PROJECT_SLUG}"
 version = "0.1.0"
-description = "{{cookiecutter.project_description}}"
+description = "{PROJECT_DESCRIPTION}"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">={PYTHON_VERSION}"
 authors = [
-    {name = "{{cookiecutter.project_author}}"}
+    {name = "{PROJECT_AUTHOR}"}
 ]
 
 dependencies = [
