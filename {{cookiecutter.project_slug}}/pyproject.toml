@@ -1,0 +1,50 @@
+{% if cookiecutter.package_manager == 'poetry' -%}
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_description}}"
+authors = ["{{cookiecutter.project_author}}"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^{{cookiecutter.python_version}}"
+ipykernel = "*"
+nbformat = "*"
+pandas = "*"
+numpy = "*"
+requests = "*"
+plotly = "*"
+openpyxl = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+{% elif cookiecutter.package_manager == 'uv' -%}
+[project]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_description}}"
+readme = "README.md"
+requires-python = ">={{cookiecutter.python_version}}"
+authors = [
+    {name = "{{cookiecutter.project_author}}"}
+]
+
+dependencies = [
+    "ipykernel",
+    "nbformat",
+    "pandas",
+    "numpy",
+    "requests",
+    "plotly",
+    "openpyxl",
+]
+
+[build-system]
+requires = ["hatchling>=1.0.0"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = false
+{% endif %}

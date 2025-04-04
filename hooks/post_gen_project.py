@@ -50,32 +50,6 @@ def setup_poetry() -> bool:
     print_status("Installing Poetry...", Colors.INFO)
     if not run_command(["pipx", "install", "poetry"], "Failed to install Poetry"):
         return False
-
-    print_status("Creating pyproject.toml file...", Colors.INFO)
-    with open("pyproject.toml", "w") as f:
-        f.write(f"""
-[tool.poetry]
-name = "{PROJECT_SLUG}"
-version = "0.1.0"
-description = "{PROJECT_DESCRIPTION}"
-authors = ["{PROJECT_AUTHOR}"]
-readme = "README.md"
-package-mode = false
-
-[tool.poetry.dependencies]
-python = "^{PYTHON_VERSION}"
-ipykernel = "*"
-nbformat = "*"
-pandas = "*"
-numpy = "*"
-requests = "*"
-plotly = "*"
-openpyxl = "*"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-""")
     
     print_status("Creating virtual environment with Poetry...", Colors.INFO)
     if not run_command(["poetry", "env", "use", f"python{PYTHON_VERSION}"], 
@@ -92,37 +66,6 @@ def setup_uv() -> bool:
     print_status("Installing uv...", Colors.INFO)
     if not run_command(["pipx", "install", "uv"], "Failed to install uv"):
         return False
-
-    print_status("Creating pyproject.toml file...", Colors.INFO)
-    with open("pyproject.toml", "w") as f:
-        f.write(f"""
-[project]
-name = "{PROJECT_SLUG}"
-version = "0.1.0"
-description = "{PROJECT_DESCRIPTION}"
-readme = "README.md"
-requires-python = ">={PYTHON_VERSION}"
-authors = [
-    "{PROJECT_AUTHOR}"
-]
-
-dependencies = [
-    "ipykernel",
-    "nbformat",
-    "pandas",
-    "numpy",
-    "requests",
-    "plotly",
-    "openpyxl",
-]
-
-[build-system]
-requires = ["hatchling>=1.0.0"]
-build-backend = "hatchling.build"
-
-[tool.uv]
-package-mode = false
-""")
     
     print_status("Creating virtual environment with uv...", Colors.INFO)
     if not run_command(["uv", "venv", "--python", f"{PYTHON_VERSION}"], 
