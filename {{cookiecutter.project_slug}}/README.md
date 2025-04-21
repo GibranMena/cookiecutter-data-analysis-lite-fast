@@ -46,4 +46,4 @@ This project is released under [{{ cookiecutter.project_license }}](/LICENSE).
 
 ---
 
-This repository was generated with [cookiecutter](https://github.com/cookiecutter/cookiecutter).
+This repository was generated with [cookiecutter](https://github.com/fer-aguirre/cookiecutter-data-analysis-lite).
