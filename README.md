@@ -1,8 +1,8 @@
-# Cookiecutter Data Analysis Lite 🐝
+# Cookiecutter Data Analysis lisght and fast 🐆
 
-A [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data journalism projects that offers a simplified and beginner-friendly structure.
+A [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data journalism projects that offers a folder structure, conflict preventing and testing environment for data journalism projects.
 
-Created by: Fernanda Aguirre Ruíz
+Created by: [Gibran Mena-Aguilar](https://linktr.ee/gibranmena), inspired on Fernanda Aguirre's
 
 ---
 
@@ -11,6 +11,7 @@ Created by: Fernanda Aguirre Ruíz
 - **Consistency:** Maintains a standardized structure across all your data analysis projects
 - **Efficiency:** Eliminates the repetitive setup process for new projects
 - **Best Practices:** Follows established data science project organization principles
+- **Dependency conflict prevention:** Uses modern environment management and includes a conflict hygiene script
 - **Flexibility:** Customizable to your specific needs while maintaining structure
 
 ---
