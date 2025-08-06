@@ -1,4 +1,4 @@
-# Cookiecutter Data Analysis lisght and fast 🐆
+# Cookiecutter Data Analysis light and fast 🐆
 
 A [cookiecutter](https://github.com/cookiecutter/cookiecutter) template for data journalism projects that offers a folder structure, conflict preventing and testing environment for data journalism projects.
 
