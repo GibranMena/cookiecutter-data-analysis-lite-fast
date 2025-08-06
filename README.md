@@ -33,7 +33,7 @@ pip install cookiecutter
 Then generate a new data project:
 
 ```
-cookiecutter https://github.com/fer-aguirre/cookiecutter-data-analysis-lite
+cookiecutter https://github.com/GibranMena/cookiecutter-data-analysis-lite-fast
 ```
 
 ---
